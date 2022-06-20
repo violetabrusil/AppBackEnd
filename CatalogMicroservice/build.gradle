@@ -1,0 +1,40 @@
+plugins {
+	id 'org.springframework.boot' version '2.7.0'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
+	id 'com.microsoft.azure.azurewebapp' version '1.2.0'
+}
+
+group = 'com.thesis.catalogmicroservice'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '17'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	runtimeOnly 'org.postgresql:postgresql'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
+
+azurewebapp {
+    subscription = 'Azure for Students'
+    resourceGroup = 'thesis'
+    appName = 'catalogmicroservice'
+    region = 'Central US'
+    runtime {
+      os = 'Linux'
+      webContainer = 'Tomcat 9.0' // or 'Java SE' if you want to run an executable jar
+      javaVersion = 'Java 17'
+    }
+    auth {
+        type = 'azure_cli' // support azure_cli, oauth2, device_code and service_principal
+    }
+}
