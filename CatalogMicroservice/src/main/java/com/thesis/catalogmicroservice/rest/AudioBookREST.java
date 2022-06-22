@@ -26,13 +26,16 @@ public class AudioBookREST {
 	@Autowired
 	private AudioBookService audioBookService;
 	
-	@PostMapping ("/saveAudioBook")
+	@PostMapping ("/addAudioBook")
 	private ResponseEntity<AudioBook> saveAudioBook (@RequestBody AudioBook audioBook){
-		AudioBook temp = audioBookService.create(audioBook);
+		AudioBook temp = audioBookService.addAudioBook(audioBook);
 		
 		try {
-			return ResponseEntity.created(new URI("/api/audioBook"+ temp.getIdAudioBook())).body(temp);
-			
+			if(temp == null) {
+				return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
+			}else {
+				return ResponseEntity.created(new URI("/api/audioBook"+ temp.getIdAudioBook())).body(temp);
+			}
 		}catch(Exception e){
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
@@ -44,9 +47,9 @@ public class AudioBookREST {
 		return ResponseEntity.ok(audioBookService.getAllAudioBook());
 	}
 	
-	@DeleteMapping("/deleteAudioBook")
-	private ResponseEntity<Void> deleteAudioBook (@RequestBody AudioBook audioBook){
-		audioBookService.delete(audioBook);
+	@DeleteMapping("/deleteAudioBook/{idAudioBook}")
+	private ResponseEntity<Void> deleteAudioBook (@PathVariable(name = "idAudioBook") Integer idAudioBook){
+		audioBookService.deleteAudioBook(idAudioBook);
 		return ResponseEntity.ok().build();
 	}
 	
