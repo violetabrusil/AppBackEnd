@@ -2,12 +2,15 @@ package com.thesis.catalogmicroservice.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.thesis.catalogmicroservice.audiobook.AudioBook;
+import com.thesis.catalogmicroservice.audiobook.review.Review;
 import com.thesis.catalogmicroservice.repository.AudioBookRepository;
+import com.thesis.catalogmicroservice.repository.ReviewRepository;
 import com.thesis.catalogmicroservice.utils.SearchType;
 import com.thesis.catalogmicroservice.utils.finder.impl.AuthorFinder;
 import com.thesis.catalogmicroservice.utils.finder.impl.GenderFinder;
@@ -18,6 +21,9 @@ public class AudioBookService {
 
 	@Autowired
 	private AudioBookRepository audioBookRepository;
+	
+	@Autowired
+	private ReviewRepository reviewRepository;
 
 	public AudioBook addAudioBook(AudioBook audioBook) {
 		List<AudioBook> listAllAudioBook = audioBookRepository.findAll();
@@ -52,6 +58,10 @@ public class AudioBookService {
 		}
 	}
 	
+	public void updateAudioBook(Integer idAudioBook, AudioBook audioBook) {
+		audioBookRepository.save(audioBook);
+	}	
+	
 	public List<AudioBook> searchAudioBook(List<AudioBook> audioBookList, String wordToSearch, SearchType searchType) {
 
 		switch (searchType) {
@@ -75,5 +85,37 @@ public class AudioBookService {
 		}
 
 	}
+	
+	public List<AudioBook> searchAudioBooks(String searchType,String wordToSearch) {
+		List<AudioBook> listAllAudioBook = audioBookRepository.findAll();
+		switch (searchType) {
+		case "SEARCH_PER_AUTHOR":
+			
+			return this.searchAudioBook(listAllAudioBook, wordToSearch, SearchType.SEARCH_PER_AUTHOR);
+
+		case "SEARCH_PER_TITLE":
+			
+			return this.searchAudioBook(listAllAudioBook, wordToSearch, SearchType.SEARCH_PER_TITLE);
+
+		case "SEARCH_PER_GENDER":
+
+			return this.searchAudioBook(listAllAudioBook, wordToSearch, SearchType.SEARCH_PER_GENDER);
+
+		default:
+			return null;
+		}
+	}
+	
+	public Review addReview(Integer idAudioBook, Review review) {
+		AudioBook audioBook = this.serchByIdAudioBook(idAudioBook).orElse(null);
+		Set<Review> reviews = audioBook.getReviews();
+		reviews.add(review);
+		reviewRepository.save(review);
+		audioBook.setReviews(reviews);
+		audioBookRepository.save(audioBook);
+		return review;
+	}
+	
+	
 
 }

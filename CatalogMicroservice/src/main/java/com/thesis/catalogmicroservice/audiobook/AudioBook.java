@@ -1,9 +1,15 @@
 package com.thesis.catalogmicroservice.audiobook;
 
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+import com.thesis.catalogmicroservice.audiobook.review.Review;
 
 @Entity
 public class AudioBook {
@@ -20,8 +26,12 @@ public class AudioBook {
 	private String gender;
 	private String yearOfPublication;
 	
+	@OneToMany(cascade = CascadeType.ALL)
+	private Set<Review> reviews;
+	
+	
 	public AudioBook(Integer idAudioBook, String titleAudioBook, String author, String sipnosis, String urlImage,
-			String urlAudio, String gender,String yearOfPublication) {
+			String urlAudio, String gender, String yearOfPublication, Set<Review> reviews) {
 		super();
 		this.idAudioBook = idAudioBook;
 		this.titleAudioBook = titleAudioBook;
@@ -31,13 +41,13 @@ public class AudioBook {
 		this.urlAudio = urlAudio;
 		this.gender = gender;
 		this.yearOfPublication = yearOfPublication;
+		this.reviews = reviews;
 	}
-	
 	
 	public AudioBook() {
 		super();
+		// TODO Auto-generated constructor stub
 	}
-
 
 	public Integer getIdAudioBook() {
 		return idAudioBook;
@@ -105,16 +115,20 @@ public class AudioBook {
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
+	
+	public Set<Review> getReviews() {
+		return reviews;
+	}
 
+	public void setReviews(Set<Review> reviews) {
+		this.reviews = reviews;
+	}
 
 	@Override
 	public String toString() {
 		return "AudioBook [idAudioBook=" + idAudioBook + ", titleAudioBook=" + titleAudioBook + ", author=" + author
 				+ ", sipnosis=" + sipnosis + ", urlImage=" + urlImage + ", urlAudio=" + urlAudio + ", gender=" + gender
-				+ ", yearOfPublication=" + yearOfPublication + "]";
+				+ ", yearOfPublication=" + yearOfPublication + ", reviews=" + reviews + "]";
 	}
-
-
-	
 
 }
