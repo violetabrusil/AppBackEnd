@@ -58,7 +58,7 @@ public class AudioBookService {
 		}
 	}
 	
-	public void updateAudioBook(Integer idAudioBook, AudioBook audioBook) {
+	public void updateAudioBook(AudioBook audioBook) {
 		audioBookRepository.save(audioBook);
 	}	
 	

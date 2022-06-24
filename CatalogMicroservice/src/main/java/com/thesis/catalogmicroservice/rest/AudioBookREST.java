@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,14 +19,19 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.thesis.catalogmicroservice.audiobook.AudioBook;
 import com.thesis.catalogmicroservice.audiobook.review.Review;
+import com.thesis.catalogmicroservice.repository.AudioBookRepository;
 import com.thesis.catalogmicroservice.service.AudioBookService;
 
 @RestController
 @RequestMapping ("/api/audioBook/")
+@CrossOrigin ("*")
 public class AudioBookREST {
 	
 	@Autowired
 	private AudioBookService audioBookService;
+	
+	@Autowired
+	private AudioBookRepository audioBookRepository;
 	
 	@PostMapping ("/addAudioBook")
 	private ResponseEntity<AudioBook> saveAudioBook (@RequestBody AudioBook audioBook){
@@ -44,8 +50,8 @@ public class AudioBookREST {
 	}
 	
 	@GetMapping ("/getAllAudioBooks")
-	private ResponseEntity<List<AudioBook>> listAllAudioBooks (){
-		return ResponseEntity.ok(audioBookService.getAllAudioBook());
+	private List<AudioBook> listAllAudioBooks (){
+		return audioBookService.getAllAudioBook();
 	}
 	
 	@DeleteMapping("/deleteAudioBook/{idAudioBook}")
@@ -59,10 +65,12 @@ public class AudioBookREST {
 		return ResponseEntity.ok(audioBookService.serchByIdAudioBook(idAudioBook));
 	}
 	
-	@RequestMapping(value = {"/updateAudioBook/{idAudioBook}"} , method = RequestMethod.PUT)
-	private void updateAudioBook (@RequestBody AudioBook audioBook, @PathVariable(name = "idAudioBook") Integer idAudioBook ){
-		audioBookService.updateAudioBook(idAudioBook, audioBook);
+
+	@RequestMapping(value = {"/updateAudioBook"} , method = RequestMethod.PUT)
+	private void updateAudioBook (@RequestBody AudioBook audioBook){
+		audioBookService.updateAudioBook(audioBook);
 	}
+	
 	
 	@RequestMapping(value = {"/searchByAuthor/{typeSearch}/{authorName}"} , method = RequestMethod.GET)
 	private ResponseEntity<List<AudioBook>> searchAudioBookByAuthor (@PathVariable(name = "typeSearch") String typeSearch,@PathVariable(name = "authorName") String authorName){
