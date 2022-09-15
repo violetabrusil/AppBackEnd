@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.thesis.catalogmicroservice.audiobook.AudioBook;
 import com.thesis.catalogmicroservice.audiobook.review.Review;
-import com.thesis.catalogmicroservice.repository.AudioBookRepository;
 import com.thesis.catalogmicroservice.service.AudioBookService;
 
 @RestController
@@ -29,10 +28,7 @@ public class AudioBookREST {
 	
 	@Autowired
 	private AudioBookService audioBookService;
-	
-	@Autowired
-	private AudioBookRepository audioBookRepository;
-	
+		
 	@PostMapping ("/addAudioBook")
 	private ResponseEntity<AudioBook> saveAudioBook (@RequestBody AudioBook audioBook){
 		AudioBook temp = audioBookService.addAudioBook(audioBook);
@@ -65,12 +61,10 @@ public class AudioBookREST {
 		return ResponseEntity.ok(audioBookService.serchByIdAudioBook(idAudioBook));
 	}
 	
-
 	@RequestMapping(value = {"/updateAudioBook"} , method = RequestMethod.PUT)
 	private void updateAudioBook (@RequestBody AudioBook audioBook){
 		audioBookService.updateAudioBook(audioBook);
 	}
-	
 	
 	@RequestMapping(value = {"/searchByAuthor/{typeSearch}/{authorName}"} , method = RequestMethod.GET)
 	private ResponseEntity<List<AudioBook>> searchAudioBookByAuthor (@PathVariable(name = "typeSearch") String typeSearch,@PathVariable(name = "authorName") String authorName){

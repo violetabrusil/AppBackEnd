@@ -16,7 +16,7 @@ public class TitleFinder extends Finder<AudioBook> {
 	@Override
 	public int compare(AudioBook o1, AudioBook o2) {
 		
-		if(o1.getTitleAudioBook().contains(o2.getTitleAudioBook())) {
+		if(o1.getTitleAudioBook().toLowerCase().contains(o2.getTitleAudioBook().toLowerCase())) {
 			return 0;
 		}
 		else{

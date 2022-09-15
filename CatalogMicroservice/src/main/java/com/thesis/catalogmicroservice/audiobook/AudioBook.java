@@ -29,9 +29,11 @@ public class AudioBook {
 	@OneToMany(cascade = CascadeType.ALL)
 	private Set<Review> reviews;
 	
+	private String userId;
+	
 	
 	public AudioBook(Integer idAudioBook, String titleAudioBook, String author, String sipnosis, String urlImage,
-			String urlAudio, String gender, String yearOfPublication, Set<Review> reviews) {
+			String urlAudio, String gender, String yearOfPublication, Set<Review> reviews, String userId) {
 		super();
 		this.idAudioBook = idAudioBook;
 		this.titleAudioBook = titleAudioBook;
@@ -42,8 +44,9 @@ public class AudioBook {
 		this.gender = gender;
 		this.yearOfPublication = yearOfPublication;
 		this.reviews = reviews;
+		this.userId = userId;
 	}
-	
+
 	public AudioBook() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -123,12 +126,20 @@ public class AudioBook {
 	public void setReviews(Set<Review> reviews) {
 		this.reviews = reviews;
 	}
+	
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
 
 	@Override
 	public String toString() {
 		return "AudioBook [idAudioBook=" + idAudioBook + ", titleAudioBook=" + titleAudioBook + ", author=" + author
 				+ ", sipnosis=" + sipnosis + ", urlImage=" + urlImage + ", urlAudio=" + urlAudio + ", gender=" + gender
-				+ ", yearOfPublication=" + yearOfPublication + ", reviews=" + reviews + "]";
+				+ ", yearOfPublication=" + yearOfPublication + ", reviews=" + reviews + ", userId=" + userId + "]";
 	}
 
 }

@@ -22,13 +22,13 @@ public class Review {
     @JoinColumn(name = "idAudioBook")
     @Transient
     private AudioBook audiobook;
-	private Integer userId;
+	private String userId;
     private String comment;
 	private String rating;
 	
 
 
-	public Review(Integer idReview, AudioBook audiobook, Integer userId, String comment, String rating) {
+	public Review(Integer idReview, AudioBook audiobook, String userId, String comment, String rating) {
 		super();
 		this.idReview = idReview;
 		this.audiobook = audiobook;
@@ -50,11 +50,11 @@ public class Review {
 		this.idReview = idReview;
 	}
 
-	public Integer getUserId() {
+	public String getUserId() {
 		return userId;
 	}
 
-	public void setUserId(Integer userId) {
+	public void setUserId(String userId) {
 		this.userId = userId;
 	}
 
