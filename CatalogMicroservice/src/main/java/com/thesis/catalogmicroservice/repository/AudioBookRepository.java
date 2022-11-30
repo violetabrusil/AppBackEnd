@@ -7,3 +7,4 @@ import com.thesis.catalogmicroservice.audiobook.AudioBook;
 public interface AudioBookRepository extends JpaRepository<AudioBook, Integer> {
 
 }
+

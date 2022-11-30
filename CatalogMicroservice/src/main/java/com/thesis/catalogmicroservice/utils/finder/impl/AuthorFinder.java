@@ -15,7 +15,7 @@ public class AuthorFinder extends Finder<AudioBook> {
 	
 	@Override
 	public int compare(AudioBook o1, AudioBook o2) {
-		if(o1.getAuthor().equalsIgnoreCase(o2.getAuthor()) == true) {
+		if(o1.getAuthor().toLowerCase().contains(o2.getAuthor().toLowerCase())) {
 			return 0;
 		}
 		else{

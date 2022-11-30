@@ -16,7 +16,7 @@ public class GenderFinder extends Finder<AudioBook>{
 
 	@Override
 	public int compare(AudioBook o1, AudioBook o2) {
-		if(o1.getGender().equalsIgnoreCase(o2.getGender())) {
+		if(o1.getGender().toLowerCase().contains(o2.getGender().toLowerCase())) {
 			return 0;
 		}
 		else{

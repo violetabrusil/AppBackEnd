@@ -7,7 +7,8 @@ plugins {
 
 group = 'com.thesis.catalogmicroservice'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '17'
+
+sourceCompatibility = '8'
 
 repositories {
 	mavenCentral()
@@ -20,21 +21,10 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
-tasks.named('test') {
-	useJUnitPlatform()
-}
-
-azurewebapp {
-    subscription = 'Azure for Students'
-    resourceGroup = 'thesis'
-    appName = 'catalogmicroservice'
-    region = 'Central US'
-    runtime {
-      os = 'Linux'
-      webContainer = 'Tomcat 9.0' // or 'Java SE' if you want to run an executable jar
-      javaVersion = 'Java 17'
-    }
-    auth {
-        type = 'azure_cli' // support azure_cli, oauth2, device_code and service_principal
-    }
+jar {
+  manifest {
+    attributes(
+      'Main-Class': 'com.thesis.catalogmicroservice.CatalogMicroserviceApplication'
+    )
+  }
 }
