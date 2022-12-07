@@ -76,5 +76,13 @@ public class AudioBookREST {
 		return audioBookService.addReview(idAudioBook, review);
 	
 	}
+	
+	@RequestMapping(value = {"/getAudioBooksFromPlayList/{idAudioBooks}"} , method = RequestMethod.GET)
+	private ResponseEntity<List<AudioBook>> getAudioBooks (@PathVariable(name = "idAudioBooks") String idAudioBooks ){
+		return ResponseEntity.ok(audioBookService.getAdudioBooksFromPlayList(idAudioBooks));
+	}
+	
+	
+	
 
 }

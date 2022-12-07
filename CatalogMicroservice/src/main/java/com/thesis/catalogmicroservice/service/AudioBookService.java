@@ -1,5 +1,6 @@
 package com.thesis.catalogmicroservice.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -115,6 +116,21 @@ public class AudioBookService {
 		audioBook.setReviews(reviews);
 		audioBookRepository.save(audioBook);
 		return review;
+	}
+	
+	public List<AudioBook> getAdudioBooksFromPlayList(String idAudioBooks) {
+		String[] arrayIdAudioBooks = idAudioBooks.split(",");
+		List<AudioBook> result = new ArrayList<AudioBook> ();
+		for (String idAudioBook : arrayIdAudioBooks) {
+			AudioBook audioBook = this.serchByIdAudioBook(Integer.parseInt(idAudioBook)).orElse(null);
+			if (audioBook != null) {
+				result.add(audioBook);
+			}
+		}
+		
+		return result;
+		
+		
 	}
 	
 	
